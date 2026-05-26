@@ -1,0 +1,58 @@
+ [
+  {
+    "id": 6,
+    "name": "white hilled shoes",
+    "price": 12.99,
+    "description": "Comfortable white shoes with a hill design. Perfect for casual wear or sports activities.",
+    "imageUrl": "https://picsum.photos/id/21/400/300"
+  },
+  {
+
+    "id": 7,
+    "name": "The TypeScript Handbook",
+    "price": 34.99,
+    "description": "Master TypeScript with this comprehensive 400-page guide – from basics to advanced patterns. Perfect for frontend developers.",
+    "imageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400"  
+
+  },
+  {
+    "id": 8,
+    "name": "Canvas Tote Bag",
+    "price": 19.99,
+    "description": "Durable 100% organic cotton tote. Fits laptop, books, and daily essentials. Available in natural beige.",
+    "imageUrl": "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=400"  
+},
+{
+  "id": 9,
+  "name": "Bass+ Wireless Headphones",
+  "price": 89.99,
+  "description": "Over‑ear headphones with deep bass, 40h battery life, and foldable design. Perfect for commuting or home studio.",
+  "imageUrl": "https://images.pexels.com/photos/1649771/pexels-photo-1649771.jpeg?auto=compress&cs=tinysrgb&w=600"
+
+},
+{
+  "id": 10,
+  "name": "Humidifier",
+  "price": 45.99,
+  "description": "Quiet, 2.5L tank humidifier with adjustable mist output and auto shut‑off. Improves air quality and sleep.",
+  "imageUrl": "https://picsum.photos/id/26/400/300"
+ 
+},
+{
+  "id": 11,
+  "name": "Happy Sip Smiley Face Mug",
+  "price": 14.99,
+  "description": "Ceramic 12oz mug with a cheerful smiley face design. Microwave and dishwasher safe. Start your day with a smile!",
+  "imageUrl": "https://picsum.photos/id/88/400/300"
+
+},
+{
+  "id": 12,
+  "name": "Eco-Friendly Bamboo Toothbrush",
+  "price": 9.99,
+  "description": "Sustainable bamboo toothbrush with soft, biodegradable bristles. A greener choice for your oral care routine.",
+  "imageUrl": "https://images.unsplash.com/photo-1588776814546-1b8c9e5f0c8e?w=400"  
+}
+
+
+]

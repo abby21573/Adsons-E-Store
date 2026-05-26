@@ -1,0 +1,10 @@
+import * as React from "react";
+import { IconSvgProps } from "@/types";
+export declare const Logo: React.FC<IconSvgProps>;
+export declare const DiscordIcon: React.FC<IconSvgProps>;
+export declare const TwitterIcon: React.FC<IconSvgProps>;
+export declare const GithubIcon: React.FC<IconSvgProps>;
+export declare const MoonFilledIcon: ({ size, width, height, ...props }: IconSvgProps) => import("react/jsx-runtime").JSX.Element;
+export declare const SunFilledIcon: ({ size, width, height, ...props }: IconSvgProps) => import("react/jsx-runtime").JSX.Element;
+export declare const HeartFilledIcon: ({ size, width, height, ...props }: IconSvgProps) => import("react/jsx-runtime").JSX.Element;
+export declare const SearchIcon: (props: IconSvgProps) => import("react/jsx-runtime").JSX.Element;
