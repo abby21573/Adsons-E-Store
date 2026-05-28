@@ -5,7 +5,7 @@
 "scripts": {
   "test": "echo \"Error: no test specified\" && exit 1",
   "dev": "vite",
-  "build": "tsc -p tsconfig.json && npx vite build",
+  "build": "tsc -p tsconfig.json && node ./node_modules/vite/bin/vite.js build",
   "lint": "eslint --fix",
   "preview": "vite preview"
 },
