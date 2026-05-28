@@ -2,13 +2,13 @@
   "name": "vite-template",
   "private": true,
   "type": "module",
-"scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "dev": "vite",
-  "build": "tsc -p tsconfig.json && node ./node_modules/vite/bin/vite.js build",
-  "lint": "eslint --fix",
-  "preview": "vite preview"
-},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "tsc -p tsconfig.json && node ./node_modules/vite/bin/vite.js build",
+    "lint": "eslint --fix",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "@heroui/react": "3.0.3",
     "@heroui/styles": "3.0.3",
@@ -48,6 +48,7 @@
     "globals": "16.0.0",
     "postcss": "^8.5.15",
     "prettier": "3.5.3",
+    "serve": "^14.2.6",
     "tailwind-variants": "3.2.2",
     "tailwindcss": "4.1.11",
     "typescript": "5.6.3",

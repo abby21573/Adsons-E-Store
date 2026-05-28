@@ -1,106 +1,84 @@
-"use client";
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react'; // hamburger & close icons
+import { Link } from 'react-router-dom'; // if you use React Router
 
-import { Button, Kbd, Link, TextField, InputGroup } from "@heroui/react";
-import clsx from "clsx";
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-import { siteConfig } from "@/config/site";
-import { ThemeSwitch } from "@/components/theme-switch";
-import {
-  TwitterIcon,
-  DiscordIcon,
-  HeartFilledIcon,
-  SearchIcon,
-  Logo,
-} from "@/components/icons";
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
 
-interface NavbarProps {
-  cartItemCount?: number; // accepts cart item count
-}
-
-export const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
-  const searchInput = (
-    <TextField aria-label="Search" type="search">
-      <InputGroup>
-        <InputGroup.Prefix>
-          <SearchIcon className="text-base text-muted pointer-events-none flex-shrink-0" />
-        </InputGroup.Prefix>
-        <InputGroup.Input className="text-sm" placeholder="Search..." />
-        <InputGroup.Suffix>
-          <Kbd className="inline-flex">
-            <Kbd.Abbr keyValue="command" />
-            <Kbd.Content>K</Kbd.Content>
-          </Kbd>
-        </InputGroup.Suffix>
-      </InputGroup>
-    </TextField>
-  );
+  // Replace these with your actual routes/links
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'Shop', path: '/shop' },
+    { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' },
+    { name: 'Cart', path: '/cart' },
+  ];
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
-      <div className="mx-auto flex flex-wrap items-center justify-between gap-4 px-6 py-3 max-w-[1280px]">
-        {/* Left side: Logo & main nav items */}
-        <div className="flex items-center gap-6 flex-wrap">
-          <a className="flex items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">ADSONS</p>
-          </a>
-          <ul className="flex flex-wrap gap-4">
-            {siteConfig.navItems.map((item) => (
-              <li key={item.href || item.label}>
-                <a
-                  className={clsx(
-                    "text-foreground hover:text-accent transition-colors whitespace-nowrap",
-                    "data-[active=true]:text-accent data-[active=true]:font-medium"
-                  )}
-                  href={item.href}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+    <>
+      {/* Navbar background & container */}
+      <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo / Header text */}
+            <div className="flex-shrink-0">
+              <Link to="/" className="text-xl font-bold text-gray-800">
+                Your Store Name
+              </Link>
+            </div>
+
+            {/* Hamburger button (always visible) */}
+            <div className="flex md:hidden">
+              <button
+                onClick={toggleMenu}
+                className="text-gray-800 hover:text-gray-600 focus:outline-none"
+                aria-label="Toggle menu"
+              >
+                {isOpen ? <X size={28} /> : <Menu size={28} />}
+              </button>
+            </div>
+
+            {/* Optional: you can keep a minimal desktop right area (e.g., cart icon) */}
+            <div className="hidden md:flex items-center space-x-4">
+              {/* If you want a cart icon visible on desktop, add it here */}
+            </div>
+          </div>
         </div>
+      </nav>
 
-        {/* Right side: Cart, social icons, theme switch, search, sponsor button */}
-        <div className="flex items-center gap-3 flex-wrap">
-          {/* Cart Icon with badge */}
-          <Link href="/cart" className="relative text-xl hover:text-accent transition-colors">
-            🛒
-            {cartItemCount > 0 && (
-              <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                {cartItemCount > 9 ? "9+" : cartItemCount}
-              </span>
-            )}
-          </Link>
-
-          <Link
-            aria-label="Twitter"
-            href={siteConfig.links.twitter}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <TwitterIcon className="text-muted" />
-          </Link>
-          <Link
-            aria-label="Discord"
-            href={siteConfig.links.discord}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <DiscordIcon className="text-muted" />
-          </Link>
-          <ThemeSwitch />
-          {searchInput}
-          <Button
-            className="text-sm font-normal"
-            variant="tertiary"
-            onPress={() => window.open(siteConfig.links.sponsor, "_blank")}
-          >
-            <HeartFilledIcon className="text-danger" />
-            Sponsor
-          </Button>
+      {/* Mobile menu overlay / drawer (always from hamburger) */}
+      {/* This appears when isOpen = true */}
+      <div
+        className={`fixed top-16 left-0 w-full bg-white shadow-lg transform transition-transform duration-300 z-40 ${
+          isOpen ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
+        <div className="flex flex-col p-4 space-y-3">
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              onClick={closeMenu}
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900"
+            >
+              {link.name}
+            </Link>
+          ))}
         </div>
       </div>
-    </nav>
+
+      {/* Optional: overlay backdrop when menu is open */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black opacity-40 z-30"
+          onClick={closeMenu}
+        />
+      )}
+    </>
   );
 };
+
+export default Navbar;
