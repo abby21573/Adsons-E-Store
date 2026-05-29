@@ -46,6 +46,7 @@
     "eslint-plugin-react-hooks": "5.2.0",
     "eslint-plugin-unused-imports": "4.1.4",
     "globals": "16.0.0",
+    "http-server": "^14.1.1",
     "postcss": "^8.5.15",
     "prettier": "3.5.3",
     "serve": "^14.2.6",
