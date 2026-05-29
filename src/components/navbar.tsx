@@ -1,84 +1,142 @@
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react'; // hamburger & close icons
-import { Link } from 'react-router-dom'; // if you use React Router
+"use client";
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+import { useState } from "react";
+import { Button, Kbd, Link, TextField, InputGroup } from "@heroui/react";
+import { Menu, X } from "lucide-react";
+import clsx from "clsx";
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-  const closeMenu = () => setIsOpen(false);
+import { siteConfig } from "@/config/site";
+import { ThemeSwitch } from "@/components/theme-switch";
+import {
+  TwitterIcon,
+  DiscordIcon,
+  HeartFilledIcon,
+} from "@/components/icons";
 
-  // Replace these with your actual routes/links
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Shop', path: '/shop' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
-    { name: 'Cart', path: '/cart' },
-  ];
+interface NavbarProps {
+  cartItemCount?: number;
+}
+
+export const Navbar = ({ cartItemCount = 0 }: NavbarProps) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
+  const searchInput = (
+    <TextField aria-label="Search" type="search">
+      <InputGroup>
+        <InputGroup.Prefix />
+        <InputGroup.Input className="text-sm" placeholder="Search..." />
+        <InputGroup.Suffix>
+          <Kbd className="inline-flex">
+            <Kbd.Abbr keyValue="command" />
+            <Kbd.Content>K</Kbd.Content>
+          </Kbd>
+        </InputGroup.Suffix>
+      </InputGroup>
+    </TextField>
+  );
+
+  const rightSideItems = (
+    <>
+      <Link href="/cart" className="relative text-xl hover:text-accent transition-colors">
+        🛒
+        {cartItemCount > 0 && (
+          <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+            {cartItemCount > 9 ? "9+" : cartItemCount}
+          </span>
+        )}
+      </Link>
+      <ThemeSwitch />
+      {searchInput}
+    </>
+  );
 
   return (
     <>
-      {/* Navbar background & container */}
-      <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo / Header text */}
-            <div className="flex-shrink-0">
-              <Link to="/" className="text-xl font-bold text-gray-800">
-                Your Store Name
-              </Link>
-            </div>
+      <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
+        <div className="mx-auto flex flex-wrap items-center justify-between gap-4 px-6 py-3 max-w-[1280px]">
+          {/* Left side: Logo + store name (always visible) */}
+          <div className="flex items-center gap-2">
+            {/* Replace the src attribute with your public image URL */}
+            <img
+              src="/logo.png"  // CHANGE THIS TO YOUR PUBLIC URL OR PATH
+              alt="Adsons Logo"
+              className="h-8 w-auto"
+            />
+            <p className="font-bold text-inherit text-lg">ADSONS</p>
+          </div>
 
-            {/* Hamburger button (always visible) */}
-            <div className="flex md:hidden">
-              <button
-                onClick={toggleMenu}
-                className="text-gray-800 hover:text-gray-600 focus:outline-none"
-                aria-label="Toggle menu"
-              >
-                {isOpen ? <X size={28} /> : <Menu size={28} />}
-              </button>
+          {/* Desktop navigation (hidden on mobile) */}
+          <div className="hidden md:flex items-center gap-6 flex-wrap">
+            <ul className="flex flex-wrap gap-4">
+              {siteConfig.navItems.map((item) => (
+                <li key={item.href || item.label}>
+                  <a
+                    className={clsx(
+                      "text-foreground hover:text-accent transition-colors whitespace-nowrap",
+                      "data-[active=true]:text-accent data-[active=true]:font-medium"
+                    )}
+                    href={item.href}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className="flex items-center gap-3">
+              {rightSideItems}
             </div>
+          </div>
 
-            {/* Optional: you can keep a minimal desktop right area (e.g., cart icon) */}
-            <div className="hidden md:flex items-center space-x-4">
-              {/* If you want a cart icon visible on desktop, add it here */}
-            </div>
+          {/* Mobile hamburger button (visible only on small screens) */}
+          <div className="flex md:hidden">
+            <button
+              onClick={toggleMobileMenu}
+              className="text-foreground hover:text-accent focus:outline-none"
+              aria-label="Menu"
+            >
+              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile menu overlay / drawer (always from hamburger) */}
-      {/* This appears when isOpen = true */}
+      {/* Mobile drawer menu */}
       <div
-        className={`fixed top-16 left-0 w-full bg-white shadow-lg transform transition-transform duration-300 z-40 ${
-          isOpen ? 'translate-y-0' : '-translate-y-full'
-        }`}
+        className={clsx(
+          "fixed top-[73px] left-0 w-full bg-background/95 backdrop-blur-lg border-b border-separator z-40 transition-transform duration-300 md:hidden",
+          isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
+        )}
       >
-        <div className="flex flex-col p-4 space-y-3">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              onClick={closeMenu}
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900"
-            >
-              {link.name}
-            </Link>
-          ))}
+        <div className="flex flex-col p-4 space-y-4 max-h-[calc(100vh-73px)] overflow-y-auto">
+          <ul className="flex flex-col space-y-2">
+            {siteConfig.navItems.map((item) => (
+              <li key={item.href || item.label}>
+                <a
+                  href={item.href}
+                  onClick={closeMobileMenu}
+                  className="block py-2 text-foreground hover:text-accent transition-colors"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="flex flex-col space-y-3 pt-2 border-t border-separator">
+            {rightSideItems}
+          </div>
         </div>
       </div>
 
-      {/* Optional: overlay backdrop when menu is open */}
-      {isOpen && (
+      {/* Backdrop overlay */}
+      {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-40 z-30"
-          onClick={closeMenu}
+          className="fixed inset-0 bg-black/30 z-30 md:hidden"
+          onClick={closeMobileMenu}
         />
       )}
     </>
   );
 };
-
-export default Navbar;

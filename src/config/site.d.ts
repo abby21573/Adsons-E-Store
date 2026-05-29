@@ -10,11 +10,4 @@ export declare const siteConfig: {
         label: string;
         href: string;
     }[];
-    links: {
-        github: string;
-        twitter: string;
-        docs: string;
-        discord: string;
-        sponsor: string;
-    };
 };
